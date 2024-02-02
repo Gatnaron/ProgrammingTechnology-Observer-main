@@ -7,6 +7,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import observerComponents.Infastructure.Observer;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -23,13 +25,14 @@ public class SlideComponent implements Observer {
     }
     public BorderPane getComponent() { return component; }
     @Override
-    public void update(Date date) {
+    public void update() {
+        var date = new SimpleDateFormat("HH:mm:ss");
         Platform.runLater(() -> {
             component.getChildren().clear();
 
             textChild.setText(based.get(new Random().nextInt(0, 5)));
 
-            if (date.getSeconds() % 2 == 0) this.component.setTop(this.textChild);
+            if (date.getCalendar().get(Calendar.SECOND) % 2 == 0) this.component.setTop(this.textChild);
             else { this.component.setBottom(this.textChild);}
         });
     }
